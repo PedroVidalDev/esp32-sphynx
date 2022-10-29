@@ -50,11 +50,11 @@ void setup(){
 }
  
 void loop(){
-  if (! rfid.PICC_IsNewCardPresent()){ //checando se existe algum cartao no leitor
+  if (! rfid.PICC_IsNewCardPresent()){
     return;
   }
     
-  if (! rfid.PICC_ReadCardSerial()){ //vendo c da pra ler o cartao
+  if (! rfid.PICC_ReadCardSerial()){
     return;
   }
       
