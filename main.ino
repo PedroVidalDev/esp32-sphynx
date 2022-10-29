@@ -11,8 +11,8 @@
 MFRC522 rfid(SS_PIN, RST_PIN);
 int acionador = 15;
  
-const char* ssid = "PEDRO_E_IGOR 2G";
-const char* password =  "46421148";
+const char* ssid = "example-ssid";
+const char* password =  "example-password";
  
 AsyncWebServer server(80);
 AsyncWebSocket ws("/ws");
@@ -29,8 +29,8 @@ void onWsEvent(AsyncWebSocket * server, AsyncWebSocketClient * client, AwsEventT
 void setup(){
   Serial.begin(115200);
 
-  SPI.begin(); //iniciando spi
-  rfid.PCD_Init(); //iniciando rfid
+  SPI.begin();
+  rfid.PCD_Init();
 
   pinMode(acionador, OUTPUT);
  
