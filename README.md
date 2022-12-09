@@ -3,4 +3,6 @@ Esse repositório é o código do ESP32 pertencente ao projeto "Sphynx", respons
 
 Saiba mais sobre o WebServer do projeto "Sphynx" em: https://github.com/PedroVidalDev/server-sphynx
 
-![Imagem do esquema do ESP32 montado com o módulo RFID](https://user-images.githubusercontent.com/113215138/198835954-fb34d0eb-dfe3-40a2-ac2b-748a811c4344.png)
+![Imagem montagem do projeto](https://user-images.githubusercontent.com/113215138/206733946-c4472448-3059-4841-a29f-7598c1785e8f.png)
+
+
