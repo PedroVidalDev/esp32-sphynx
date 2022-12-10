@@ -7,6 +7,6 @@ Saiba mais sobre o WebServer do projeto "Sphynx" em: https://github.com/PedroVid
 
 ___
 
-##Bibliotecas utilizadas
+## Bibliotecas utilizadas
 - https://github.com/me-no-dev/ESPAsyncWebServer
 
