@@ -1,4 +1,4 @@
-# ESP32 - Sphynx
+# <p align=center> ESP32 - Sphynx </p>
 Esse repositório é o código do ESP32 pertencente ao projeto "Sphynx", responsável por coletar informações utilizando o módulo RFID e enviar esses dados para um servidor com o uso de Web-Sockets.
 
 Saiba mais sobre o WebServer do projeto "Sphynx" em: https://github.com/PedroVidalDev/server-sphynx
