@@ -15,14 +15,12 @@
 
 #define led 2
 
-uint8_t New_MAC_Address[] = {0x10, 0xAA, 0xBB, 0xCC, 0x33};
-
 MFRC522 rfid(SS_PIN, RST_PIN);
 
 int acionador = 15;
  
-const char* ssid = "Vidals";
-const char* password =  "46421148";
+const char* ssid = "Charlien";
+const char* password =  "Amo_MeuGato19";
 const char* hostname =  "pog";
 
 String message;
@@ -33,6 +31,7 @@ AsyncWebSocket ws("/ws");
 void onWsEvent(AsyncWebSocket * server, AsyncWebSocketClient * client, AwsEventType type, void * arg, uint8_t *data, size_t len){
   if(type == WS_EVT_CONNECT){
     Serial.println("Websocket client connection received");
+    ws.textAll("$2a$12$X9my8HHbMJYk6y04FnR6ie1B/WnLOlBAeEMRhEOvt.8z/OmOR6kLS");
   }      
    
   else if(type == WS_EVT_DISCONNECT){
@@ -72,14 +71,6 @@ void controlDoor(String message){
  
 void setup(){
   Serial.begin(115200);
-  Serial.println(WiFi.getHostname());
-  WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE);
-
-  WiFi.setHostname(hostname);
-  
-  WiFi.mode(WIFI_STA);
-
-  esp_wifi_set_mac(WIFI_IF_STA, New_MAC_Address);
 
   SPI.begin();
   rfid.PCD_Init();
