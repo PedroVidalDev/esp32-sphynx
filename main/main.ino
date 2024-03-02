@@ -261,7 +261,7 @@ void setup(){
       Serial.print("Endereco IP do AP: ");
       Serial.println(IP);
 
-      serverAP.begin();
+      serverAP.begin(); // Starts AP Mode server. Connects to 192.168.4.1 or sphynx-dev.local
       apServerUp = true;
 
       if (!MDNS.begin("Sphynx-dev")) {
