@@ -84,6 +84,22 @@ String html = R"HTML(
           overflow-y: scroll;
       }
 
+      .atualizar{
+        position: relative;
+        margin-top: 15px;
+        width: 20%;
+        height: 30px;
+        border: 0;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: .5s;
+      }
+
+      .atualizar:hover{
+          background-color: #022534;
+          color: white;
+      }
+
       table.content-table{
           border-collapse: collapse;
           font-size: 2rem;
@@ -217,6 +233,7 @@ String html = R"HTML(
 String htmlFooter = R"footer(</tbody>
   </table>
       </div>
+      <button class="atualizar"> Atualizar </button>
       <div class="conn-container">
           <form action="#" method="POST">
               <label class="label" for="password">Digite a senha:</label>
@@ -233,6 +250,7 @@ String htmlFooter = R"footer(</tbody>
     const widget = document.querySelector(".conn-container");
     const label = document.querySelector(".label");
     const buttonExit = document.querySelector(".conn-exit")
+    const buttonUpdate = document.querySelector(".atualizar");
 
     buttons.forEach(element => {
         element.addEventListener("click", () => {
@@ -245,6 +263,39 @@ String htmlFooter = R"footer(</tbody>
 
     buttonExit.addEventListener("click", () => {
         widget.style.display = "none";
+    })
+
+    buttonUpdate.addEventListener("click", () => {
+        fetch("linkDoEsp", {
+            mode: "cors",
+            methos: "GET",
+        })
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            let tableBody = document.querySelector("tbody");
+
+            let tr = document.createElement("tr");
+
+            let tdName = document.createElement("td");
+            tdName.textContent = data.name;
+
+            let tdSignal = document.createElement("td");
+            tdSignal.textContent = data.signal;
+
+            let tdConn = document.createElement("td");
+
+            let connLink = document.createElement("a");
+            connLink.textContent = "Conectar";
+            connLink.className = "correct";
+            tdConn.appendChild(connLink);
+
+            tableBody.appendChild(tdName);
+            tableBody.appendChild(tdSignal);
+            tableBody.appendChild(tdConn);
+
+        })
     })
   </script>
   </html>)footer";
