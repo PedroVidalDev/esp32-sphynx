@@ -291,9 +291,11 @@ String htmlFooter = R"footer(</tbody>
             connLink.className = "correct";
             tdConn.appendChild(connLink);
 
-            tableBody.appendChild(tdName);
-            tableBody.appendChild(tdSignal);
-            tableBody.appendChild(tdConn);
+            tr.appendChild(tdName);
+            tr.appendChild(tdSignal);
+            tr.appendChild(tdConn);
+
+            tableBody.innerHTML = tableBody.innerHTML + tr;
 
         })
     })
@@ -368,6 +370,30 @@ void setupWiFi() {
   indexHtml = html + linhas + htmlFooter;
   linhas = "";
   request->send_P(200, "text/html", indexHtml.c_str());
+  });
+
+  server.on("/refresh", HTTP_GET, [](AsyncWebServerRequest *request){
+    String linhas = ""; 
+    if(WiFi.scanComplete() == -2){
+      WiFi.scanNetworks(true);
+      linhas += ("<tr><td>Procurando</td><td>Procurando</td><td> <a class='correct'>Procurando</a> </tr>");
+    }
+    
+    else if (WiFi.scanComplete() == -1){
+      linhas += ("<tr><td>Procurando</td><td>Procurando</td><td> <a class='correct'>Procurando</a> </tr>");
+    }
+    
+    else{
+      Serial.print("Encontrado ");
+      Serial.print(WiFi.scanComplete());
+      Serial.println(" redes WiFi na area");
+      for (int i = 0; i < WiFi.scanComplete(); ++i) {
+        linhas += ("<tr><td>" + WiFi.SSID(i) + "</td><td>" + WiFi.RSSI(i) + "dBm</td><td> <a class='correct'> Connect </a> </tr>");
+      }
+
+      WiFi.scanDelete();
+    }
+    request->send_P(200, "text/html", linhas.c_str()); 
   });
 }
 
