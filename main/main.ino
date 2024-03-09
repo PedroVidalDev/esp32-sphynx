@@ -63,6 +63,7 @@ String html = R"HTML(
       main{
           position: relative;
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
           padding: 0 30px;
@@ -215,6 +216,20 @@ String html = R"HTML(
           background-color: #022534;
           color: white;
       }
+
+      @media(max-width: 935px){
+        table.content-table th, table.content-table td {
+          font-size: 0.6rem;
+        }
+
+        table.content-table th, table.content-table td a{
+            font-size: 0.6rem;
+        }
+
+        .container{
+          height: 70%;
+        }
+      }
   </style>
   <body>
       <header></header>
@@ -262,42 +277,11 @@ String htmlFooter = R"footer(</tbody>
     });
 
     buttonExit.addEventListener("click", () => {
-        widget.style.display = "none";
+      widget.style.display = "none";
     })
 
     buttonUpdate.addEventListener("click", () => {
-        fetch("linkDoEsp", {
-            mode: "cors",
-            methos: "GET",
-        })
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            let tableBody = document.querySelector("tbody");
-
-            let tr = document.createElement("tr");
-
-            let tdName = document.createElement("td");
-            tdName.textContent = data.name;
-
-            let tdSignal = document.createElement("td");
-            tdSignal.textContent = data.signal;
-
-            let tdConn = document.createElement("td");
-
-            let connLink = document.createElement("a");
-            connLink.textContent = "Conectar";
-            connLink.className = "correct";
-            tdConn.appendChild(connLink);
-
-            tr.appendChild(tdName);
-            tr.appendChild(tdSignal);
-            tr.appendChild(tdConn);
-
-            tableBody.innerHTML = tableBody.innerHTML + tr;
-
-        })
+      location.reload();
     })
   </script>
   </html>)footer";
@@ -370,30 +354,6 @@ void setupWiFi() {
   indexHtml = html + linhas + htmlFooter;
   linhas = "";
   request->send_P(200, "text/html", indexHtml.c_str());
-  });
-
-  server.on("/refresh", HTTP_GET, [](AsyncWebServerRequest *request){
-    String linhas = ""; 
-    if(WiFi.scanComplete() == -2){
-      WiFi.scanNetworks(true);
-      linhas += ("<tr><td>Procurando</td><td>Procurando</td><td> <a class='correct'>Procurando</a> </tr>");
-    }
-    
-    else if (WiFi.scanComplete() == -1){
-      linhas += ("<tr><td>Procurando</td><td>Procurando</td><td> <a class='correct'>Procurando</a> </tr>");
-    }
-    
-    else{
-      Serial.print("Encontrado ");
-      Serial.print(WiFi.scanComplete());
-      Serial.println(" redes WiFi na area");
-      for (int i = 0; i < WiFi.scanComplete(); ++i) {
-        linhas += ("<tr><td>" + WiFi.SSID(i) + "</td><td>" + WiFi.RSSI(i) + "dBm</td><td> <a class='correct'> Connect </a> </tr>");
-      }
-
-      WiFi.scanDelete();
-    }
-    request->send_P(200, "text/html", linhas.c_str()); 
   });
 }
 
